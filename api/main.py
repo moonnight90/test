@@ -7,7 +7,7 @@ from flask_apscheduler import APScheduler
 app = Flask(__name__)
 
 schedule = APScheduler()
-started = False
+started = True
 
 
 #/home/ahmadraza1907r2/mysite/pt.json
@@ -53,7 +53,7 @@ class Calander():
 
 
 
-obj = None
+obj = Calander()
 @app.route('/')
 def index():
     if started == False:
@@ -68,7 +68,7 @@ def start():
             sd = int(request.form.get("day"))
             sm = int(request.form.get('mon'))
             sy = int(request.form.get('year'))
-            obj = Calander() 
+            # obj = Calander() 
             if not sd or not sm or not sy:
                 return jsonify({"Code":"Err","msg":"Invalid Data"})
             obj.sd = sd
@@ -76,8 +76,7 @@ def start():
             obj.sy = sy
             # t1 = threading.Thread(target=obj.run)
             # t1.start()
-            schedule.add_job(id='task',func = obj.run, trigger='interval',seconds=1)
-            schedule.start()
+            
             started= True
             return jsonify({"Code":"Success","msg":"Started"})
         except: return jsonify({"Code":"Err","msg":"Invalid Data"})
@@ -104,4 +103,6 @@ def set():
 
 
 if __name__ == '__main__':
+    schedule.add_job(id='task',func = obj.run, trigger='interval',seconds=1)
+    schedule.start()
     app.run(debug=False,host="0.0.0.0")
