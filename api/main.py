@@ -1,11 +1,12 @@
 from flask import Flask, jsonify,request,render_template
 from datetime import datetime
 import threading,time
-import json,schedule
+import json
 import pytz
-
+from flask_apscheduler import APScheduler
 app = Flask(__name__)
 
+schedule = APScheduler()
 started = False
 
 
@@ -46,16 +47,10 @@ class Calander():
     def get_CMD(self):
         return {"Code":"Success","msg":self.a,"Islamic Date":f"{self.sd} {self.pt['Names'][f'{self.sm}']} {self.sy}"}
     def run(self):
-        
         self.a+=1
         self.change_date(self.today_prayer_time())
-        time.sleep(1)
 
-def main():
-    schedule.every(1).seconds.do(obj.run)
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+
 
 
 obj = None
@@ -79,8 +74,10 @@ def start():
             obj.sd = sd
             obj.sm = sm
             obj.sy = sy
-            t1 = threading.Thread(target=main)
-            t1.start()
+            # t1 = threading.Thread(target=obj.run)
+            # t1.start()
+            schedule.add_job(id='task',func = obj.run, trigger='interval',seconds=1)
+            schedule.start()
             started= True
             return jsonify({"Code":"Success","msg":"Started"})
         except: return jsonify({"Code":"Err","msg":"Invalid Data"})
