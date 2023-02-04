@@ -1,7 +1,7 @@
 from flask import Flask, jsonify,request,render_template
 from datetime import datetime
-import json
 import threading,time
+import json,schedule
 import pytz
 
 app = Flask(__name__)
@@ -46,13 +46,17 @@ class Calander():
     def get_CMD(self):
         return {"Code":"Success","msg":self.a,"Islamic Date":f"{self.sd} {self.pt['Names'][f'{self.sm}']} {self.sy}"}
     def run(self):
-        try:
-            while True:
-                self.a+=1
-                self.change_date(self.today_prayer_time())
-                time.sleep(1)
-        except Exception as e:
-            print(e)
+        
+        self.a+=1
+        self.change_date(self.today_prayer_time())
+        time.sleep(1)
+
+def main():
+    schedule.every(1).seconds.do(obj.run)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
 
 obj = None
 @app.route('/')
@@ -69,22 +73,17 @@ def start():
             sd = int(request.form.get("day"))
             sm = int(request.form.get('mon'))
             sy = int(request.form.get('year'))
-            
             obj = Calander() 
-#             if not sd or not sm or not sy:
-#                 return jsonify({"Code":"Err","msg":"Invalid Data"})
-            print(sd,sm,sy)
+            if not sd or not sm or not sy:
+                return jsonify({"Code":"Err","msg":"Invalid Data"})
             obj.sd = sd
             obj.sm = sm
             obj.sy = sy
-            t1 = threading.Thread(target=obj.run)
-            print(t1)
-            print(t1.start())
+            t1 = threading.Thread(target=main)
+            t1.start()
             started= True
             return jsonify({"Code":"Success","msg":"Started"})
-        except Exception as e: 
-            print(e)
-            return jsonify({"Code":"Err","msg":"Invalid Data"})
+        except: return jsonify({"Code":"Err","msg":"Invalid Data"})
     else:
         if started:
             return jsonify({"Code":"Success","msg":"Already Started"})
