@@ -77,7 +77,9 @@ def start():
             threading.Thread(target=obj.run).start()
             started= True
             return jsonify({"Code":"Success","msg":"Started"})
-        except: return jsonify({"Code":"Err","msg":"Invalid Data"})
+        except Exception as e: 
+            print(e)
+            return jsonify({"Code":"Err","msg":"Invalid Data"})
     else:
         if started:
             return jsonify({"Code":"Success","msg":"Already Started"})
