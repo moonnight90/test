@@ -66,10 +66,11 @@ def start():
             sd = int(request.form.get("day"))
             sm = int(request.form.get('mon'))
             sy = int(request.form.get('year'))
-            print(sd,sm,sy)
+            
             obj = Calander() 
             if not sd or not sm or not sy:
                 return jsonify({"Code":"Err","msg":"Invalid Data"})
+            print(sd,sm,sy)
             obj.sd = sd
             obj.sm = sm
             obj.sy = sy
