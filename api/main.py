@@ -68,8 +68,8 @@ def start():
             sy = int(request.form.get('year'))
             
             obj = Calander() 
-            if not sd or not sm or not sy:
-                return jsonify({"Code":"Err","msg":"Invalid Data"})
+#             if not sd or not sm or not sy:
+#                 return jsonify({"Code":"Err","msg":"Invalid Data"})
             print(sd,sm,sy)
             obj.sd = sd
             obj.sm = sm
