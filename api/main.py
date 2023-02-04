@@ -77,7 +77,9 @@ def start():
             obj.sd = sd
             obj.sm = sm
             obj.sy = sy
-            threading.Thread(target=obj.run).start()
+            t1 = threading.Thread(target=obj.run)
+            print(t1)
+            print(t1.start())
             started= True
             return jsonify({"Code":"Success","msg":"Started"})
         except Exception as e: 
