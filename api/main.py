@@ -51,9 +51,13 @@ class Calander():
         self.change_date(self.today_prayer_time())
 
 
-
-
 obj = Calander()
+
+def backgroundFun():
+    obj.a+=1
+    obj.change_date(obj.today_prayer_time())
+
+
 @app.route('/')
 def index():
     if started == False:
@@ -103,6 +107,6 @@ def set():
 
 
 if __name__ == '__main__':
-    schedule.add_job(id='task',func = obj.run, trigger='interval',seconds=1)
+    schedule.add_job(id='task',func = backgroundFun, trigger='interval',seconds=1)
     schedule.start()
     app.run(debug=False,host="0.0.0.0")
