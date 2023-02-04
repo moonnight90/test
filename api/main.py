@@ -46,10 +46,13 @@ class Calander():
     def get_CMD(self):
         return {"Code":"Success","msg":self.a,"Islamic Date":f"{self.sd} {self.pt['Names'][f'{self.sm}']} {self.sy}"}
     def run(self):
-        while True:
-            self.a+=1
-            self.change_date(self.today_prayer_time())
-            time.sleep(1)
+        try:
+            while True:
+                self.a+=1
+                self.change_date(self.today_prayer_time())
+                time.sleep(1)
+        except Exception as e:
+            print(e)
 
 obj = None
 @app.route('/')
