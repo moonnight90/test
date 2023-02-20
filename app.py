@@ -6,7 +6,7 @@ import json
 import pytz
 app = Flask(__name__)
 
-started = True
+started = False
 
 class Calander():
     def __init__(self) -> None:
