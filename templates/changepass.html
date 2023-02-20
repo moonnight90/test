@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password</title>
+</head>
+<body>
+    <form action="/changepassword" method="POST">
+        <label for="Current Password">Current Password: </label>
+        <input type="password" name="current" id="current"><br>
+        <label for="New Password">New Password: </label>
+        <input type="password" name="new" id="new"> <br>
+        <label for="Confirm Password">Confirm Password: </label>
+        <input type="password" name="confirm" id="confirm"><br>
+        <input type="checkbox" id="showpass" onclick="show()">Show Password <br>
+        <input type="submit" value="Update">
+    </form>
+</body>
+<script>
+function show(){cb = document.querySelector('#showpass');ne = document.getElementById('confirm');confi = document.getElementById('new');cr = document.getElementById('current');if (cb.checked){ne.type = "text";confi.type = "text";cr.type = "text";}else{ne.type = "password";confi.type = "password";cr.type = "password";}}
+</script>
+</html>

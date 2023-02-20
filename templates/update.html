@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Date</title>
+</head>
+<body>
+    <form action="/update" method="POST">
+        <label for="Day">Day</label>
+        <input type="number" name="day" value="{{date.d}}" max="30" min="1" />
+        <label for="Month">Month</label>
+        <!-- <input type="number" name="mon" value="{{date.m}}" max="12" min="1" /> -->
+        <select name="mselect">
+            {% for d in date.months %} 
+            <option value="{{d[0]}}" {% if date.m == d[0] %} selected {% endif %}>{{d[1]}}</option>
+            {% endfor %}
+        </select>
+        <label for="Year">Year</label>
+        <input type="number" name="year" value="{{date.y}}" max="2000" min="1000"/>
+        <label for="Year">Password</label>
+        <input type="password" name='pass'>
+        <input type="submit" value='Update'>
+    </form>
+</body>
+</html>
